@@ -1,4 +1,4 @@
-Imports Event-Notifier.Classes 'We should ensure this matches the project name otherwise errors
+'Imports Event-Notifier.Classes 'We should ensure this matches the project name otherwise errors
 
 Public Class AdminLogin
     ' Creating a Variable to count failed attempts

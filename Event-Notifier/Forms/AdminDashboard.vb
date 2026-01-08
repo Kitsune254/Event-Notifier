@@ -1,4 +1,4 @@
-Imports Event-Notifier.classes
+'Imports Event-Notifier.classes
 Public Class AdminDashboard
 
  ' This method will run automatically when the form opens
