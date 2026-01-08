@@ -31,9 +31,11 @@ Partial Class UserDashboard
         btnEvents = New Button()
         pnlDisplay = New Panel()
         lblContent = New Label()
-        btnacademics = New Button()
-        btnConcerts = New Button()
-        btnfestivals = New Button()
+        btnAcademics = New Button()
+        btnCulture = New Button()
+        btnAdministrative = New Button()
+        btnCareer = New Button()
+        btnSocial = New Button()
         pnlSidebar.SuspendLayout()
         pnllogo.SuspendLayout()
         CType(pblogo, ComponentModel.ISupportInitialize).BeginInit()
@@ -143,44 +145,70 @@ Partial Class UserDashboard
         lblContent.TabIndex = 0
         lblContent.Text = "Label1"
         ' 
-        ' btnacademics
+        ' btnAcademics
         ' 
-        btnacademics.BackColor = Color.DarkSlateGray
-        btnacademics.FlatStyle = FlatStyle.Flat
-        btnacademics.ForeColor = SystemColors.InactiveBorder
-        btnacademics.Location = New Point(206, 279)
-        btnacademics.Name = "btnacademics"
-        btnacademics.Size = New Size(200, 50)
-        btnacademics.TabIndex = 4
-        btnacademics.Text = "Academic Events"
-        btnacademics.TextAlign = ContentAlignment.MiddleLeft
-        btnacademics.UseVisualStyleBackColor = False
+        btnAcademics.BackColor = Color.DarkSlateGray
+        btnAcademics.FlatStyle = FlatStyle.Flat
+        btnAcademics.ForeColor = SystemColors.InactiveBorder
+        btnAcademics.Location = New Point(206, 279)
+        btnAcademics.Name = "btnAcademics"
+        btnAcademics.Size = New Size(200, 50)
+        btnAcademics.TabIndex = 4
+        btnAcademics.Text = "Academic Events"
+        btnAcademics.TextAlign = ContentAlignment.MiddleLeft
+        btnAcademics.UseVisualStyleBackColor = False
         ' 
-        ' btnConcerts
+        ' btnCulture
         ' 
-        btnConcerts.BackColor = Color.DarkSlateGray
-        btnConcerts.FlatStyle = FlatStyle.Flat
-        btnConcerts.ForeColor = SystemColors.InactiveBorder
-        btnConcerts.Location = New Point(206, 223)
-        btnConcerts.Name = "btnConcerts"
-        btnConcerts.Size = New Size(200, 50)
-        btnConcerts.TabIndex = 5
-        btnConcerts.Text = "Upcoming Concerts"
-        btnConcerts.TextAlign = ContentAlignment.MiddleLeft
-        btnConcerts.UseVisualStyleBackColor = False
+        btnCulture.BackColor = Color.DarkSlateGray
+        btnCulture.FlatStyle = FlatStyle.Flat
+        btnCulture.ForeColor = SystemColors.InactiveBorder
+        btnCulture.Location = New Point(206, 223)
+        btnCulture.Name = "btnCulture"
+        btnCulture.Size = New Size(200, 50)
+        btnCulture.TabIndex = 5
+        btnCulture.Text = "Culture Week"
+        btnCulture.TextAlign = ContentAlignment.MiddleLeft
+        btnCulture.UseVisualStyleBackColor = False
         ' 
-        ' btnfestivals
+        ' btnAdministrative
         ' 
-        btnfestivals.BackColor = Color.DarkSlateGray
-        btnfestivals.FlatStyle = FlatStyle.Flat
-        btnfestivals.ForeColor = SystemColors.InactiveBorder
-        btnfestivals.Location = New Point(206, 164)
-        btnfestivals.Name = "btnfestivals"
-        btnfestivals.Size = New Size(200, 50)
-        btnfestivals.TabIndex = 6
-        btnfestivals.Text = "Upcoming Festivals"
-        btnfestivals.TextAlign = ContentAlignment.MiddleLeft
-        btnfestivals.UseVisualStyleBackColor = False
+        btnAdministrative.BackColor = Color.DarkSlateGray
+        btnAdministrative.FlatStyle = FlatStyle.Flat
+        btnAdministrative.ForeColor = SystemColors.InactiveBorder
+        btnAdministrative.Location = New Point(206, 164)
+        btnAdministrative.Name = "btnAdministrative"
+        btnAdministrative.Size = New Size(200, 50)
+        btnAdministrative.TabIndex = 6
+        btnAdministrative.Text = "Adminstrative Events"
+        btnAdministrative.TextAlign = ContentAlignment.MiddleLeft
+        btnAdministrative.UseVisualStyleBackColor = False
+        ' 
+        ' btnCareer
+        ' 
+        btnCareer.BackColor = Color.DarkSlateGray
+        btnCareer.FlatStyle = FlatStyle.Flat
+        btnCareer.ForeColor = SystemColors.InactiveBorder
+        btnCareer.Location = New Point(206, 335)
+        btnCareer.Name = "btnCareer"
+        btnCareer.Size = New Size(200, 50)
+        btnCareer.TabIndex = 7
+        btnCareer.Text = "Career Week"
+        btnCareer.TextAlign = ContentAlignment.MiddleLeft
+        btnCareer.UseVisualStyleBackColor = False
+        ' 
+        ' btnSocial
+        ' 
+        btnSocial.BackColor = Color.DarkSlateGray
+        btnSocial.FlatStyle = FlatStyle.Flat
+        btnSocial.ForeColor = SystemColors.InactiveBorder
+        btnSocial.Location = New Point(206, 391)
+        btnSocial.Name = "btnSocial"
+        btnSocial.Size = New Size(200, 50)
+        btnSocial.TabIndex = 8
+        btnSocial.Text = "Social events"
+        btnSocial.TextAlign = ContentAlignment.MiddleLeft
+        btnSocial.UseVisualStyleBackColor = False
         ' 
         ' UserDashboard
         ' 
@@ -188,9 +216,11 @@ Partial Class UserDashboard
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ActiveCaptionText
         ClientSize = New Size(800, 450)
-        Controls.Add(btnfestivals)
-        Controls.Add(btnConcerts)
-        Controls.Add(btnacademics)
+        Controls.Add(btnSocial)
+        Controls.Add(btnCareer)
+        Controls.Add(btnAdministrative)
+        Controls.Add(btnCulture)
+        Controls.Add(btnAcademics)
         Controls.Add(pnlDisplay)
         Controls.Add(btnEvents)
         Controls.Add(pnllogo)
@@ -214,8 +244,10 @@ Partial Class UserDashboard
     Friend WithEvents btnEvents As Button
     Friend WithEvents pnlDisplay As Panel
     Friend WithEvents lblContent As Label
-    Friend WithEvents btnacademics As Button
-    Friend WithEvents btnConcerts As Button
-    Friend WithEvents btnfestivals As Button
+    Friend WithEvents btnAcademics As Button
+    Friend WithEvents btnCulture As Button
+    Friend WithEvents btnAdministrative As Button
+    Friend WithEvents btnCareer As Button
+    Friend WithEvents btnSocial As Button
 
 End Class

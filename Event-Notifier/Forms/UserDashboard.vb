@@ -24,30 +24,50 @@ Public Class UserDashboard
 
     ' --- BUTTON EVENTS ---
 
-    ' 1. EVENTS BUTTON (Formerly Sports)
-    ' We still fetch "Sports" from DB, assuming that's how you categorized them in the table
+    ' 1. EVENTS BUTTON
     Private Sub btnEvents_MouseEnter(sender As Object, e As EventArgs) Handles btnEvents.MouseEnter
         ShowPopup(btnEvents, "Sports")
     End Sub
 
-    ' 2. CONCERTS BUTTON
-    Private Sub btnConcerts_MouseEnter(sender As Object, e As EventArgs) Handles btnConcerts.MouseEnter
-        ShowPopup(btnConcerts, "Concerts")
+    ' 2. ACADEMICS BUTTON 
+    Private Sub btnAcademics_MouseEnter(sender As Object, e As EventArgs) Handles btnAcademics.MouseEnter
+        ShowPopup(btnAcademics, "Academic")
     End Sub
 
-    ' 3. ACADEMICS BUTTON (Formerly Academic)
-    Private Sub btnAcademics_MouseEnter(sender As Object, e As EventArgs) Handles btnacademics.MouseEnter
-        ShowPopup(btnacademics, "Academic")
+    ' 3. CULTURE BUTTON 
+    Private Sub btnCulture_MouseEnter(sender As Object, e As EventArgs) Handles btnCulture.MouseEnter
+
+        ShowPopup(btnCulture, "Culture")
     End Sub
 
-    ' 4. FESTIVALS BUTTON (New)
-    Private Sub btnFestivals_MouseEnter(sender As Object, e As EventArgs) Handles btnfestivals.MouseEnter
-        ShowPopup(btnfestivals, "Festivals")
+    ' 4. ADMINISTRATIVE BUTTON 
+    Private Sub btnAdministrative_MouseEnter(sender As Object, e As EventArgs) Handles btnAdministrative.MouseEnter
+
+        ShowPopup(btnAdministrative, "Administrative")
+    End Sub
+
+    ' 5. CAREER BUTTON 
+    Private Sub btnCareer_MouseEnter(sender As Object, e As EventArgs) Handles btnCareer.MouseEnter
+
+        ShowPopup(btnCareer, "Career")
+    End Sub
+
+    ' 6. SOCIAL BUTTON 
+    Private Sub btnSocial_MouseEnter(sender As Object, e As EventArgs) Handles btnSocial.MouseEnter
+
+        ShowPopup(btnSocial, "Social")
     End Sub
 
     ' --- SHARED MOUSE LEAVE ---
-    ' This handles hiding the panel for ALL 4 buttons
-    Private Sub AllButtons_MouseLeave(sender As Object, e As EventArgs) Handles btnEvents.MouseLeave, btnConcerts.MouseLeave, btnacademics.MouseLeave, btnfestivals.MouseLeave
+    ' Updated to handle hiding the panel for the buttons
+    Private Sub AllButtons_MouseLeave(sender As Object, e As EventArgs) Handles _
+        btnEvents.MouseLeave,
+        btnAcademics.MouseLeave,
+        btnCulture.MouseLeave,
+        btnAdministrative.MouseLeave,
+        btnCareer.MouseLeave,
+        btnSocial.MouseLeave
+
         pnlDisplay.Visible = False
     End Sub
 
@@ -72,7 +92,7 @@ Public Class UserDashboard
                         Dim currentSubCat As String = ""
 
                         While Await reader.ReadAsync()
-                            ' We treat 'sport_category' as the sub-header (e.g. Football, Jazz, Math, Food)
+                            ' We treat 'sport_category' as the sub-header
                             Dim subCat As String = reader("sport_category").ToString()
                             Dim timeVal As String = reader("match_time").ToString()
                             Dim details As String = reader("match_details").ToString()
@@ -102,6 +122,7 @@ Public Class UserDashboard
         Return sb.ToString()
     End Function
 
+
     Private Sub btnDasboard_Click(sender As Object, e As EventArgs) Handles btnlogin.Click
 
         ' 1. Create a new instance of the form you want to open
@@ -126,5 +147,7 @@ Public Class UserDashboard
         Me.Hide()
     End Sub
 
+    Private Sub btnConcerts_Click(sender As Object, e As EventArgs) Handles btnCulture.Click
 
+    End Sub
 End Class
