@@ -58,4 +58,10 @@ Public Class Form1
             MessageBox.Show("Upload failed")
         End If
     End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim HomePage As New UserDashboard()
+        HomePage.Show()
+        Me.Hide()
+    End Sub
 End Class

@@ -1,5 +1,4 @@
 ﻿Public Class Events
-
     Public Property EventID As Integer
     Public Property EventName As String
     Public Property Description As String
@@ -74,5 +73,4 @@
     Public Overrides Function ToString() As String
         Return EventName & " - " & EventDate.ToShortDateString()
     End Function
-
 End Class

@@ -22,6 +22,7 @@ Partial Class UserDashboard
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        lstEvents = New ListBox()
         pnlSidebar = New Panel()
         btnevtregistration = New Button()
         btnlogin = New Button()
@@ -129,21 +130,21 @@ Partial Class UserDashboard
         ' 
         ' pnlDisplay
         ' 
-        pnlDisplay.Controls.Add(lblContent)
-        pnlDisplay.Location = New Point(487, 219)
+        pnlDisplay.Controls.Add(Me.lstEvents)
+        pnlDisplay.Location = New System.Drawing.Point(487, 219)
         pnlDisplay.Name = "pnlDisplay"
-        pnlDisplay.Size = New Size(300, 150)
+        pnlDisplay.Size = New System.Drawing.Size(300, 150)
         pnlDisplay.TabIndex = 3
         pnlDisplay.Visible = False
         ' 
-        ' lblContent
+        ' lstEvents
         ' 
-        lblContent.AutoSize = True
-        lblContent.Location = New Point(76, 17)
-        lblContent.Name = "lblContent"
-        lblContent.Size = New Size(63, 25)
-        lblContent.TabIndex = 0
-        lblContent.Text = "Label1"
+        Me.lstEvents.FormattingEnabled = True
+        Me.lstEvents.ItemHeight = 25
+        Me.lstEvents.Location = New System.Drawing.Point(0, 0)
+        Me.lstEvents.Name = "lstEvents"
+        Me.lstEvents.Size = New System.Drawing.Size(300, 150)
+        Me.lstEvents.TabIndex = 0
         ' 
         ' btnAcademics
         ' 
@@ -243,7 +244,8 @@ Partial Class UserDashboard
     Friend WithEvents btnlogin As Button
     Friend WithEvents btnEvents As Button
     Friend WithEvents pnlDisplay As Panel
-    Friend WithEvents lblContent As Label
+    Private lblContent As Label
+    Friend WithEvents lstEvents As ListBox
     Friend WithEvents btnAcademics As Button
     Friend WithEvents btnCulture As Button
     Friend WithEvents btnAdministrative As Button

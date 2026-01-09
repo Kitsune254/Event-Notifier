@@ -4,9 +4,9 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>Event_Notifier</RootNamespace>
-    <StartupObject>Sub Main</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
+    <StartupObject>Event_Notifier.My.MyApplication</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

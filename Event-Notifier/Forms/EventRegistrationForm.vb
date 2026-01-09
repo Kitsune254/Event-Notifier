@@ -1,88 +1,44 @@
 Imports Npgsql
 
-Class EventRegistrationForm
-    Private txtDepartment As Object
+Public Class EventRegistrationForm
 
-    Private Function Validation() As Boolean
-        Dim IsValid As Boolean
-        IsValid = True
-        If String.IsNullOrWhiteSpace(txtFirstName.Text) Then
+    Private _eventId As Integer
+    Private _userId As Integer
+    Private _dbHelper As New DatabaseHelper()
 
-            IsValid = False
-        End If
-        If String.IsNullOrWhiteSpace(txtLastname.Text) Then
+    Public Sub New(eventId As Integer, userId As Integer)
 
-            IsValid = False
-        End If
-        If String.IsNullOrWhiteSpace(txtEmail.Text) OrElse Not ValidEmail(txtEmail.Text) Then
+        ' This call is required by the designer.
+        InitializeComponent()
 
-            IsValid = False
-        End If
-        If String.IsNullOrWhiteSpace(cmbUserType.Text) Then
+        ' Add any initialization after the InitializeComponent() call.
+        _eventId = eventId
+        _userId = userId
 
-            IsValid = False
-        End If
-        If String.IsNullOrWhiteSpace(txtID.Text) Then
+    End Sub
 
-            IsValid = False
-        End If
-        If Not (ChckbxTerms.IsChecked) Then
+    Private Sub EventRegistrationForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        lblEventID.Text = _eventId.ToString()
+        lblUserID.Text = _userId.ToString()
+    End Sub
 
-            IsValid = False
-        End If
+    Private Sub btnRegister_Click(sender As Object, e As EventArgs) Handles btnRegister.Click
+        Dim notes As String = txtNotes.Text.Trim()
 
-        Return IsValid
-    End Function
-
-    Private Function ValidEmail(email As String) As Boolean
-        Dim pattern As String = "^[^@\s]+@[^@\s]+\.[^@\s]+$"
-        Dim regex As New Text.RegularExpressions.Regex(pattern)
-        Return regex.IsMatch(email)
-    End Function
-
-
-
-
-    Private Sub Register_Click(sender As Object, e As RoutedEventArgs) Handles Register.Click
-        If Not Validation() Then
-            MessageBox.Show("Please fill in all required fields correctly.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error)
-            Return
-        End If
-        Dim database As New DatabaseHelper()
-        If database.DuplicateRegistration(txtEmail.Text.Trim()) Then
-            MessageBox.Show("An account with this email already exists.", "Duplicate Registration", MessageBoxButton.OK, MessageBoxImage.Warning)
-            Exit Sub
-        End If
-
-        Dim success = database.CreateUser(
-            txtFirstName.Text.Trim(),
-            txtLastname.Text.Trim(),
-            txtEmail.Text.Trim(),
-            txtPhonenumber.Text.Trim(),
-            cmbUserType.SelectedItem.ToString(),
-            txtID.Text.Trim(),
-            txtDepartment.Text.Trim())
-
-
-        If success Then
-            MessageBox.Show("Registration successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information)
-            Close()
+        If _dbHelper.RegisterUserForEvent(_eventId, _userId, notes) Then
+            MessageBox.Show("You have been successfully registered for the event!", "Registration Successful", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Me.DialogResult = DialogResult.OK
+            Me.Close()
         Else
-            MessageBox.Show("Registration failed. Please try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error)
+            ' The error message is shown by the database helper, so we just close the form.
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
         End If
-
-
     End Sub
 
-    Private Sub btnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click
-        Dim result = MessageBox.Show("Are you sure you want to cancel the registration?", "Confirm Cancel", MessageBoxButton.YesNo, MessageBoxImage.Question)
-        If result = MessageBoxResult.Yes Then
-            Dim dash As New userDashboard()
-            dash.Show()
-            Me.Hide()
-        End If
-
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Me.DialogResult = DialogResult.Cancel
+        Me.Close()
     End Sub
-
 
 End Class
