@@ -110,70 +110,80 @@ Public Class DatabaseHelper
 
     Public Function CreateEvent(ev As Events) As Integer
         Try
-            Dim query As String = "INSERT INTO Events (EventName, Description, CategoryID, EventDate, EventTime, 
-                                   Venue, OrganiserName, OrganiserContact, MaxParticipants, ImageData, 
-                                   ImageFileName, ImageContentType, CreatedByAdminID, IsActive) 
-                                   VALUES (@EventName, @Description, @CategoryID, @EventDate, @EventTime, 
-                                   @Venue, @OrganiserName, @OrganiserContact, @MaxParticipants, @ImageData, 
-                                   @ImageFileName, @ImageContentType, @CreatedByAdminID, @IsActive) 
-                                   RETURNING EventID"
+' REMOVED: ImageData, @ImageData
+        ' KEPT: ImageFileName (Critical for finding the file in the cloud)
+        Dim query As String = "INSERT INTO Events (EventName, Description, CategoryID, EventDate, EventTime, 
+                               Venue, OrganiserName, OrganiserContact, MaxParticipants, 
+                               ImageFileName, ImageContentType, CreatedByAdminID, IsActive) 
+                               VALUES (@EventName, @Description, @CategoryID, @EventDate, @EventTime, 
+                               @Venue, @OrganiserName, @OrganiserContact, @MaxParticipants, 
+                               @ImageFileName, @ImageContentType, @CreatedByAdminID, @IsActive) 
+                               RETURNING EventID"
 
-            Using conn As New NpgsqlConnection(connectionString)
-                conn.Open()
-                Using cmd As New NpgsqlCommand(query, conn)
-                    cmd.Parameters.AddWithValue("@EventName", ev.EventName)
-                    cmd.Parameters.AddWithValue("@Description", If(String.IsNullOrEmpty(ev.Description), DBNull.Value, ev.Description))
-                    cmd.Parameters.AddWithValue("@CategoryID", ev.CategoryID)
-                    cmd.Parameters.AddWithValue("@EventDate", ev.EventDate)
-                    cmd.Parameters.AddWithValue("@EventTime", ev.EventTime)
-                    cmd.Parameters.AddWithValue("@Venue", ev.Venue)
-                    cmd.Parameters.AddWithValue("@OrganiserName", ev.OrganiserName)
-                    cmd.Parameters.AddWithValue("@OrganiserContact", If(String.IsNullOrEmpty(ev.OrganiserContact), DBNull.Value, ev.OrganiserContact))
-                    cmd.Parameters.AddWithValue("@MaxParticipants", ev.MaxParticipants)
-                    cmd.Parameters.AddWithValue("@ImageData", If(ev.ImageData Is Nothing, DBNull.Value, ev.ImageData))
-                    cmd.Parameters.AddWithValue("@ImageFileName", If(String.IsNullOrEmpty(ev.ImageFileName), DBNull.Value, ev.ImageFileName))
-                    cmd.Parameters.AddWithValue("@ImageContentType", If(String.IsNullOrEmpty(ev.ImageContentType), DBNull.Value, ev.ImageContentType))
-                    cmd.Parameters.AddWithValue("@CreatedByAdminID", ev.CreatedByAdminID)
-                    cmd.Parameters.AddWithValue("@IsActive", ev.IsActive)
+        Using conn As New NpgsqlConnection(connectionString)
+            conn.Open()
+            Using cmd As New NpgsqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("@EventName", ev.EventName)
+                cmd.Parameters.AddWithValue("@Description", If(String.IsNullOrEmpty(ev.Description), DBNull.Value, ev.Description))
+                cmd.Parameters.AddWithValue("@CategoryID", ev.CategoryID)
+                cmd.Parameters.AddWithValue("@EventDate", ev.EventDate)
+                cmd.Parameters.AddWithValue("@EventTime", ev.EventTime)
+                cmd.Parameters.AddWithValue("@Venue", ev.Venue)
+                ' Make sure this matches your database spelling (OrganiserName vs orgnisername)
+                cmd.Parameters.AddWithValue("@OrganiserName", ev.OrganiserName)
+                cmd.Parameters.AddWithValue("@OrganiserContact", If(String.IsNullOrEmpty(ev.OrganiserContact), DBNull.Value, ev.OrganiserContact))
+                cmd.Parameters.AddWithValue("@MaxParticipants", ev.MaxParticipants)
+                
+                ' REMOVED: cmd.Parameters.AddWithValue("@ImageData", ...)
+                
+                cmd.Parameters.AddWithValue("@ImageFileName", If(String.IsNullOrEmpty(ev.ImageFileName), DBNull.Value, ev.ImageFileName))
+                cmd.Parameters.AddWithValue("@ImageContentType", If(String.IsNullOrEmpty(ev.ImageContentType), DBNull.Value, ev.ImageContentType))
+                cmd.Parameters.AddWithValue("@CreatedByAdminID", ev.CreatedByAdminID)
+                cmd.Parameters.AddWithValue("@IsActive", ev.IsActive)
 
-                    Return Convert.ToInt32(cmd.ExecuteScalar())
-                End Using
+                Return Convert.ToInt32(cmd.ExecuteScalar())
             End Using
-        Catch ex As Exception
-            MessageBox.Show("Error creating event: " & ex.Message, "Error")
-            Return -1
+        End Using
+    Catch ex As Exception
+        MessageBox.Show("Error creating event: " & ex.Message, "Error")
+        Return -1
         End Try
     End Function
 
     Public Function UpdateEvent(ev As Events) As Boolean
         Try
-            Dim query As String = "UPDATE Events SET EventName = @EventName, Description = @Description, 
-                                   CategoryID = @CategoryID, EventDate = @EventDate, EventTime = @EventTime, 
-                                   Venue = @Venue, OrganiserName = @OrganiserName, OrganiserContact = @OrganiserContact, 
-                                   MaxParticipants = @MaxParticipants, ImageData = @ImageData, 
-                                   ImageFileName = @ImageFileName, ImageContentType = @ImageContentType, 
-                                   IsActive = @IsActive 
-                                   WHERE EventID = @EventID"
+        
+                        
+                        ' REMOVED: ImageData = @ImageData
+        Dim query As String = "UPDATE Events SET EventName = @EventName, Description = @Description, 
+                               CategoryID = @CategoryID, EventDate = @EventDate, EventTime = @EventTime, 
+                               Venue = @Venue, OrganiserName = @OrganiserName, OrganiserContact = @OrganiserContact, 
+                               MaxParticipants = @MaxParticipants, 
+                               ImageFileName = @ImageFileName, ImageContentType = @ImageContentType, 
+                               IsActive = @IsActive 
+                               WHERE EventID = @EventID"
 
-            Using conn As New NpgsqlConnection(connectionString)
-                conn.Open()
-                Using cmd As New NpgsqlCommand(query, conn)
-                    cmd.Parameters.AddWithValue("@EventID", ev.EventID)
-                    cmd.Parameters.AddWithValue("@EventName", ev.EventName)
-                    cmd.Parameters.AddWithValue("@Description", If(String.IsNullOrEmpty(ev.Description), DBNull.Value, ev.Description))
-                    cmd.Parameters.AddWithValue("@CategoryID", ev.CategoryID)
-                    cmd.Parameters.AddWithValue("@EventDate", ev.EventDate)
-                    cmd.Parameters.AddWithValue("@EventTime", ev.EventTime)
-                    cmd.Parameters.AddWithValue("@Venue", ev.Venue)
-                    cmd.Parameters.AddWithValue("@OrganiserName", ev.OrganiserName)
-                    cmd.Parameters.AddWithValue("@OrganiserContact", If(String.IsNullOrEmpty(ev.OrganiserContact), DBNull.Value, ev.OrganiserContact))
-                    cmd.Parameters.AddWithValue("@MaxParticipants", ev.MaxParticipants)
-                    cmd.Parameters.AddWithValue("@ImageData", If(ev.ImageData Is Nothing, DBNull.Value, ev.ImageData))
-                    cmd.Parameters.AddWithValue("@ImageFileName", If(String.IsNullOrEmpty(ev.ImageFileName), DBNull.Value, ev.ImageFileName))
-                    cmd.Parameters.AddWithValue("@ImageContentType", If(String.IsNullOrEmpty(ev.ImageContentType), DBNull.Value, ev.ImageContentType))
-                    cmd.Parameters.AddWithValue("@IsActive", ev.IsActive)
+        Using conn As New NpgsqlConnection(connectionString)
+            conn.Open()
+            Using cmd As New NpgsqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("@EventID", ev.EventID)
+                cmd.Parameters.AddWithValue("@EventName", ev.EventName)
+                cmd.Parameters.AddWithValue("@Description", If(String.IsNullOrEmpty(ev.Description), DBNull.Value, ev.Description))
+                cmd.Parameters.AddWithValue("@CategoryID", ev.CategoryID)
+                cmd.Parameters.AddWithValue("@EventDate", ev.EventDate)
+                cmd.Parameters.AddWithValue("@EventTime", ev.EventTime)
+                cmd.Parameters.AddWithValue("@Venue", ev.Venue)
+                cmd.Parameters.AddWithValue("@OrganiserName", ev.OrganiserName)
+                cmd.Parameters.AddWithValue("@OrganiserContact", If(String.IsNullOrEmpty(ev.OrganiserContact), DBNull.Value, ev.OrganiserContact))
+                cmd.Parameters.AddWithValue("@MaxParticipants", ev.MaxParticipants)
+                
+                ' REMOVED: cmd.Parameters.AddWithValue("@ImageData", ...)
+                
+                cmd.Parameters.AddWithValue("@ImageFileName", If(String.IsNullOrEmpty(ev.ImageFileName), DBNull.Value, ev.ImageFileName))
+                cmd.Parameters.AddWithValue("@ImageContentType", If(String.IsNullOrEmpty(ev.ImageContentType), DBNull.Value, ev.ImageContentType))
+                cmd.Parameters.AddWithValue("@IsActive", ev.IsActive)
 
-                    cmd.ExecuteNonQuery()
+                cmd.ExecuteNonQuery()
                 End Using
             End Using
             Return True
